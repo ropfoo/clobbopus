@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	fmt.Println("hello  🐙")
+	fmt.Println("🐙 ~~~downloading files~~~")
 	config := config.Read()
 	// create initial main pages folder
 	os.Mkdir("../pages", os.ModePerm)
@@ -20,15 +20,16 @@ func main() {
 	for domain := range config.Domains {
 		wg := sync.WaitGroup{}
 		for _, query := range config.Domains[domain].Queries {
-			url := config.Domains[domain].Url + "?" + query
-			formattedQuery := strings.ReplaceAll(query, "/", "-")
-			urlParts, pageRange := helper.ExtractPageRange(url)
+			configUrl := config.Domains[domain].Url + "?" + query
+			urlParts, pageRange := helper.ExtractPageRange(configUrl)
 			for page := pageRange.StartPage; page <= pageRange.EndPage; page++ {
 				wg.Add(1)
+				url := urlParts[0] + fmt.Sprint(page) + urlParts[1]
+				filename := strings.ReplaceAll(url, "/", "~")
 				go download.DownloadPage(
 					download.Page{
-						Url:      urlParts[0] + fmt.Sprint(page) + urlParts[1],
-						Filename: formattedQuery + fmt.Sprint(page),
+						Url:      url,
+						Filename: filename,
 						Dir:      "../pages/" + domain + "/",
 					},
 					&wg,
