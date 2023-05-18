@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"strings"
 	"sync"
 
 	"github.com/ropfoo/clobbopus/internal/config"
@@ -15,7 +14,7 @@ func main() {
 	fmt.Println("🐙 ~~~downloading files~~~")
 	config := config.Read()
 	// create initial main pages folder
-	os.Mkdir("../pages", os.ModePerm)
+	os.Mkdir("../../pages", os.ModePerm)
 
 	for domain := range config.Domains {
 		wg := sync.WaitGroup{}
@@ -25,12 +24,12 @@ func main() {
 			for page := pageRange.StartPage; page <= pageRange.EndPage; page++ {
 				wg.Add(1)
 				url := urlParts[0] + fmt.Sprint(page) + urlParts[1]
-				filename := strings.ReplaceAll(url, "/", "~")
+				filename := helper.ConvertToFilename(url)
 				go download.DownloadPage(
 					download.Page{
 						Url:      url,
 						Filename: filename,
-						Dir:      "../pages/" + domain + "/",
+						Dir:      "../../pages/" + domain + "/",
 					},
 					&wg,
 				)

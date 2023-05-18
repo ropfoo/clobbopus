@@ -16,7 +16,7 @@ type Config struct {
 }
 
 func Read() Config {
-	yfile, err := os.ReadFile("../clobbopus.yml")
+	yfile, err := os.ReadFile("../../clobbopus.yml")
 	if err != nil {
 		log.Fatal(err)
 	}
