@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -9,9 +8,10 @@ import (
 )
 
 type Config struct {
+	// Port    int `yaml:"port"`
 	Domains map[string]struct {
-		Params map[string]string `yaml:"params"`
-		Urls   []string          `yaml:"urls"`
+		Queries []string `yaml:"queries"`
+		Url     string   `yaml:"url"`
 	} `yaml:"domains"`
 }
 
@@ -25,8 +25,6 @@ func Read() Config {
 	if err2 != nil {
 		log.Fatal(err2)
 	}
-
-	fmt.Println(config.Domains["musikersucht"].Urls)
 
 	return config
 }

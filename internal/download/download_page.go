@@ -9,21 +9,26 @@ import (
 	"time"
 )
 
-func DownloadPage(url string, filename string, wg *sync.WaitGroup) {
+type Page struct {
+	Url      string
+	Filename string
+	Dir      string
+}
+
+func DownloadPage(page Page, wg *sync.WaitGroup) {
 	defer wg.Done()
 	time.Sleep(time.Second)
 
 	// request page
-	response, error := http.Get(url)
+	response, error := http.Get(page.Url)
 	if error != nil {
 		fmt.Println(error)
 		return
 	}
 	defer response.Body.Close()
 
-	os.Mkdir("../test", os.ModePerm)
-
-	f := fmt.Sprintf("../test/%q.html", filename)
+	os.Mkdir(page.Dir, os.ModePerm)
+	f := page.Dir + page.Filename + ".html"
 	// create file
 	file, error := os.Create(f)
 	if error != nil {

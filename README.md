@@ -11,9 +11,8 @@ Create a config yml file called `clobbopus.yml`
 ```yml
 domains:
   sample:
-    params:
-      page: 1-20
-    urls:
-      - "http://localhost:8080/sample1"
-      - "http://localhost:8080/sample2"
+    url: "www.sample.com/results/"
+    queries:
+      - result/with?query=test
+      - result/without
 ```
