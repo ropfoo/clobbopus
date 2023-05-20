@@ -22,6 +22,8 @@ Instead of flooding external servers with requests in development - we should fl
 Create a config yml file called `clobbopus.yml`
 
 ```yml
+port: 3000 # default
+dist: pages # default
 domains:
   sample:
     url: "www.sample.com/results/"

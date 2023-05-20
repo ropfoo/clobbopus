@@ -9,7 +9,8 @@ import (
 )
 
 type Config struct {
-	// Port    int `yaml:"port"`
+	Port    string `yaml:"port"`
+	Dist    string `yaml:"dist"`
 	Domains map[string]struct {
 		Params []string `yaml:"params"`
 		Url    string   `yaml:"url"`
@@ -32,11 +33,13 @@ func (c *Config) Subroute(domain string) string {
 }
 
 func Read() Config {
-	yfile, err := os.ReadFile("../../clobbopus.yml")
+	yfile, err := os.ReadFile("clobbopus.yml")
 	if err != nil {
 		log.Fatal(err)
 	}
 	var config Config
+	config.Dist = "pages"
+	config.Port = "3000"
 	err2 := yaml.Unmarshal(yfile, &config)
 	if err2 != nil {
 		log.Fatal(err2)
