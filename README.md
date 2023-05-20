@@ -5,21 +5,29 @@ STILL WIP
 Tool for downloading and serving html files.
 Mainly useful for acting as a mock server for scraping services.
 
-## Features
-
-- download external pages by params
-- serve them on a local server
-
-## The Problem
+## Motivation
 
 Web scraping can be harmful when things go wrong.
 When developing a web scraper it is not uncommon to send tons of requests to a server that is not under your control.
 This might be because of a bug or just the nature of development espacially in a team.
 Instead of flooding external servers with requests in development - we should flood our own.
 
-## Setup
+## Features
 
-Create a config yml file called `clobbopus.yml`
+- download external pages by params
+- serve them on a local server
+
+## 🐙 Usage
+
+Run the follwing commands in order
+
+download and install
+
+```bash
+curl -L https://github.com/ropfoo/clobbopus/releases/download/Latest/install.sh -o install.sh && bash install.sh
+```
+
+create a config yml file called `clobbopus.yml`
 
 ```yml
 port: 3000 # default
@@ -30,4 +38,16 @@ domains:
     params:
       - result/with?query=test&page=~1-7~ # range from page=1 to page=7
       - result/without
+```
+
+get the initial page data
+
+```bash
+./clobbopus_data
+```
+
+run the server
+
+```bash
+./clobbopus_server
 ```
