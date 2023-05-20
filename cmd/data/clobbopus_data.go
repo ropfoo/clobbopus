@@ -24,7 +24,12 @@ func main() {
 			for page := pageRange.StartPage; page <= pageRange.EndPage; page++ {
 				wg.Add(1)
 				// create url to request page from
-				url := domainUrl + paramsParts[0] + fmt.Sprint(page) + paramsParts[1]
+				var url string
+				if page > 1 {
+					url = domainUrl + paramsParts[0] + fmt.Sprint(page) + paramsParts[1]
+				} else {
+					url = domainUrl + paramsParts[0] + paramsParts[1]
+				}
 				fmt.Println("URL: ", url)
 				filename := helper.ConvertToFilename(url)
 				go download.DownloadPage(
