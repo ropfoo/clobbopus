@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/ropfoo/clobbopus/internal/config"
@@ -24,11 +25,20 @@ func main() {
 			var subRoute = config.Subroute(domain)
 
 			app.Get(route+"/*", func(c *fiber.Ctx) error {
+				var uri string = c.Context().URI().String()
+				var uriHasSlashParam bool = strings.Contains(uri, "/?")
 				var params string = c.Params("*")
 				var queryString string = c.Context().QueryArgs().String()
-				var url string = subRoute + "/" + params
+				var url string = subRoute
+				if params != "" {
+					url = url + "/" + params
+				}
 				if queryString != "" {
-					url = url + "/" + "?" + queryString
+					if uriHasSlashParam {
+						url = url + "/" + "?" + queryString
+					} else {
+						url = url + "?" + queryString
+					}
 				}
 				var filename string = helper.ConvertUrlToFilename(url, ".html")
 				return c.SendFile("../../pages/" + domain + "/" + filename)

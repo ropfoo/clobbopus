@@ -20,6 +20,9 @@ func ConvertUrlToFilename(url string, fileType string) string {
 	var filename string
 	// replace slash
 	filename = strings.ReplaceAll(url, "/", "~")
+	// handles braces
+	filename = strings.ReplaceAll(filename, "%5B", "[")
+	filename = strings.ReplaceAll(filename, "%5D", "]")
 	// replace query start
 	filename = strings.ReplaceAll(filename, "?", "QUERY")
 	// replace AND
