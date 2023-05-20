@@ -16,14 +16,15 @@ func ConvertToFilename(input string) string {
 	return filename
 }
 
-func RevertFilename(input string) string {
+func ConvertUrlToFilename(url string, fileType string) string {
 	var filename string
 	// replace slash
-	filename = strings.ReplaceAll(input, "~", "/")
+	filename = strings.ReplaceAll(filename, "/", "~")
 	// replace query start
-	filename = strings.ReplaceAll(filename, "QUERY", "?")
+	filename = strings.ReplaceAll(filename, "?", "QUERY")
 	// replace AND
-	filename = strings.ReplaceAll(filename, "AND", "&")
-	filename = strings.ReplaceAll(filename, ".html", "")
+	filename = strings.ReplaceAll(filename, "&", "AND")
+	// add file type
+	filename = filename + fileType
 	return filename
 }

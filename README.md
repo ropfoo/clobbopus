@@ -12,7 +12,7 @@ Create a config yml file called `clobbopus.yml`
 domains:
   sample:
     url: "www.sample.com/results/"
-    queries:
+    params:
       - result/with?query=test&page=~1-7~ # range from page=1 to page=7
       - result/without
 ```

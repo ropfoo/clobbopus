@@ -10,16 +10,23 @@ type PageRange struct {
 	EndPage   int
 }
 
+const PAGE_RANGE_SPLITTER string = "~"
+
 // Extracts page count from url
 //
 // ~1-5~ -> {StartPage: 1, EndPage: 5}
-func ExtractPageRange(url string) ([2]string, PageRange) {
+func ExtractPageRangeFromParams(params string) ([2]string, PageRange) {
 	var pageRange PageRange
-	var urlParts [2]string = [2]string{url, ""}
-	if strings.Contains(url, "~") {
-		splittedUrl := strings.Split(url, "~")
-		urlParts = [2]string{splittedUrl[0], splittedUrl[2]}
-		pageRangePart := splittedUrl[1]
+	var paramsParts [2]string = [2]string{params, ""}
+	if strings.Contains(params, PAGE_RANGE_SPLITTER) {
+		// split params into 3 parts (start of qparamsuery, page range, end of params)
+		splittedParams := strings.Split(params, PAGE_RANGE_SPLITTER)
+
+		// params without page range part
+		paramsParts = [2]string{splittedParams[0], splittedParams[2]}
+
+		pageRangePart := splittedParams[1]
+
 		// get start and end page
 		pages := strings.Split(pageRangePart, "-")
 		startPage, error := strconv.Atoi(pages[0])
@@ -35,5 +42,5 @@ func ExtractPageRange(url string) ([2]string, PageRange) {
 			EndPage:   endPage,
 		}
 	}
-	return urlParts, pageRange
+	return paramsParts, pageRange
 }

@@ -18,12 +18,14 @@ func main() {
 
 	for domain := range config.Domains {
 		wg := sync.WaitGroup{}
-		for _, query := range config.Domains[domain].Queries {
-			configUrl := config.Domains[domain].Url + "?" + query
-			urlParts, pageRange := helper.ExtractPageRange(configUrl)
+		for _, params := range config.Domains[domain].Params {
+			var domainUrl = config.Domains[domain].Url
+			paramsParts, pageRange := helper.ExtractPageRangeFromParams(params)
 			for page := pageRange.StartPage; page <= pageRange.EndPage; page++ {
 				wg.Add(1)
-				url := urlParts[0] + fmt.Sprint(page) + urlParts[1]
+				// create url to request page from
+				url := domainUrl + paramsParts[0] + fmt.Sprint(page) + paramsParts[1]
+				fmt.Println("URL: ", url)
 				filename := helper.ConvertToFilename(url)
 				go download.DownloadPage(
 					download.Page{
@@ -38,3 +40,5 @@ func main() {
 		wg.Wait()
 	}
 }
+
+// http://localhost:3000/musicstuff_/page=5?instrument=bass
