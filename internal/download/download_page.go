@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 	"sync"
-	"time"
 )
 
 type Page struct {
@@ -17,7 +16,6 @@ type Page struct {
 
 func DownloadPage(page Page, wg *sync.WaitGroup) {
 	defer wg.Done()
-	time.Sleep(time.Second)
 
 	// request page
 	response, error := http.Get(page.Url)

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -27,10 +26,11 @@ func main() {
 			app.Get(route+"/*", func(c *fiber.Ctx) error {
 				var params string = c.Params("*")
 				var queryString string = c.Context().QueryArgs().String()
-				var url string = subRoute + "/" + params + "/" + "?" + queryString
-				fmt.Println("PARAMS", params)
-
-				filename := helper.ConvertUrlToFilename(url, ".html")
+				var url string = subRoute + "/" + params
+				if queryString != "" {
+					url = url + "/" + "?" + queryString
+				}
+				var filename string = helper.ConvertUrlToFilename(url, ".html")
 				return c.SendFile("../../pages/" + domain + "/" + filename)
 			})
 		}
