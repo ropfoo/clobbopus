@@ -51,3 +51,34 @@ run the server
 ```bash
 ./clobbopus_server
 ```
+
+### 🐳 Docker
+
+`Dockerfile`
+
+```Dockerfile
+FROM alpine:latest
+RUN apk update
+RUN apk add bash
+RUN apk add curl
+WORKDIR /app
+RUN curl -L https://github.com/ropfoo/clobbopus/releases/download/Latest/install.sh -o install.sh && bash install.sh
+# update with your path
+COPY ./clobbopus/clobbopus.yml .
+CMD ./clobbopus_data; ./clobbopus_server
+```
+
+`docker-compose.yml`
+
+```yml
+version: "3.8"
+services:
+  clobbopus:
+    build:
+      context: .
+      dockerfile: ./clobbopus/Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./clobbopus:/app/clobbopus
+```
