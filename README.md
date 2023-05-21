@@ -7,10 +7,7 @@ Mainly useful for acting as a mock server for scraping services.
 
 ## Motivation
 
-Web scraping can be harmful when things go wrong.
-When developing a web scraper it is not uncommon to send tons of requests to a server that is not under your control.
-This might be because of a bug or just the nature of development espacially in a team.
-Instead of flooding external servers with requests in development - we should flood our own.
+Web scraping can be harmful when things go wrong. When developing a web scraper it is not uncommon to send tons of requests to a server that is not under your control. This might be because of a bug or just the nature of development, especially in a team. Instead of flooding external servers with requests in development - we should flood our own.
 
 ## Features
 
